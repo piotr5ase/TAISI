@@ -1,0 +1,58 @@
+<htlm>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<p>
+<form action="mailto:pzyla@zsee.szczecin.pl">Imię i nazwisko<br>
+<input type="text" name="imie i nazwisko">
+<br>Płeć<br>
+<input type="radio" name="Kobieta">Kobieta
+<input type="radio" name="Mężczyzna">Mężczyzna
+<br>Wiek<br>
+<select name="Wiek">
+<option>0-18</option>
+<option>18+</option>
+</select>
+<br>Uwagi<br>
+<textarea name="Uwagi" rows="6" cols="17">
+</textarea>
+<br><input type="submit" value="Wyślij">
+</form>
+<br>Przykład 7.14
+<form  method="post" enctype="text/plain" action="">
+Wybierz język:<br>
+<select name="Języki" multiple="multiple">
+<option value="Tak">Tak</option>
+<option value="Nie">Nie</option>
+</select>
+</form>
+<br>Przykład 7.15
+<form method="POST" enctype="text/plain">
+<select name="x.x" size="7">
+<optgroup label="1">
+<option value="1.1">1.1</option>
+<option value="1.2">1.2</option>
+<optgroup label="2">
+<option value="2.1">2.1</option>
+<option value="2.2">2.2</option>
+</select>
+</form>
+<br>Przykład 7.16
+<form method="POST">
+<label>E-mail:<input type="email" placeholder="Wpisz email"></label><br>
+<label>Szukaj <input type="search" placeholder="Szukany tekst"><br>
+<label>Wybierz wartość od 1 do 5<input type="range" name="" min="1" max="5" value="1"></label><br>
+<label>Lub <input type="number" name="quantity" min="1" max="5"></label><br>
+<label>Wybierz kolor<input type="color"></label><br>
+<label>Wprowadz date urodzin</label><input type="date" name="date" max="2020-13-32"></label><br><br>
+
+</form>Przykład 7.17<br>
+Formularz rejestracyjny:<br>
+<form method="post" encytype="text/plain" action="index.php">
+<table>
+  <tr><td>Podaj imie: </td><td><input type="text" name="imie" placeholder="Jan" required></td></tr>
+  <tr><td>Podaj nazwisko: </td><td><input type="text" name="nazwisko" placeholder="Kowalski" required></td></tr>
+  <tr><td>Podaj login: </td><td><input type="login" name="login" placeholder="Login" required></td></tr>
+  <tr><td>Podaj haslo: </td><td><input type="password" name="haslo" placeholder="******" required></td></tr>
+</table>
