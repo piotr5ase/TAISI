@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poczopko</title>
+    <meta charset="utf-8">
+</head>
+<style>
+    #header {
+        width: 100%;
+        height: 225px;
+        background-color: #f1f1f1;
+    }
+</style>
+<body>
+    <div id="data" style="float:right"></div>
+    <script>
+        setInterval(function () {
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+
+            document.getElementById('data').innerHTML = day + '.' + month + '.' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+        }, 1000);
+    </script>
+<div id="header">
+W nagłówku strony znajdzie się slider ze zdjęciami, które będą się zmieniały co 10 sekund.
+<div id="slider">
+    <img src="img/5.jpg" alt="1" />
+</div>
+<script>
+    var images = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg', 'img/5.jpg'];
+    var i = 0;
+    setInterval(function () {
+        document.getElementById('slider').innerHTML = '<img src="' + images[i] + '" alt="' + i + '" />';
+        i++;
+        if (i == images.length) {
+            i = 0;
+        }
+    }, 10000);
+</script>
+
+
+Poniżej slidera ma być umieszczony baner reklamowy z tekstem „Witamy na naszej stronie”, który będzie „płynął" od prawej do lewej krawędzi strony. 
+<marquee>Witamy na naszej stronie</marquee>
+</div>
+<div id="lewy">
+Z lewej strony zostanie utworzone menu pionowe składające się z trzech gotowych ikon (wcześniej przygotowanych w postaci plików graficznych). 
+Najechanie na każdą z ikon kursorem myszy ma spowodować zmianę jej wyglądu. 
+Odsunięcie kursora ma skutkować przywróceniem poprzedniego wyglądu ikony. 
+Kliknięcie pierwszej ikony spowoduje przeniesienie do strony www.men.gov.pl, drugiej - do strony www.cke.edu.pl, a trzeciej do strony http://zsee.szczenin.pl .
+    <img src="img/1.jpg" onmouseover="this.src='img/1a.jpg'" onmouseout="this.src='img/1.jpg'" onclick="window.open('https://www.men.gov.pl')"><br>
+    <img src="img/2.jpg" onmouseover="this.src='img/2a.jpg'" onmouseout="this.src='img/2.jpg'" onclick="window.open('https://www.cke.edu.pl')"><br>
+    <img src="img/3.jpg" onmouseover="this.src='img/3a.jpg'" onmouseout="this.src='img/3.jpg'" onclick="window.open('http://zsee.szczecin.pl')"><br>
+</div>
+W swojej pracy wykorzystaj skrypty języka JavaScript.
+</body>
+

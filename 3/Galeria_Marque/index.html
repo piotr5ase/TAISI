@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+    <title>Zadanie</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    Utworzyć stronę, w której zostaną wykonane skrypty umożliwiające:
+- animowanie tekstu - przesuwanie w pętli od prawe do lewej strony
+<marquee>Tekst</marquee>
+Z jakiegoś powodu nie jest w stanie pobrać poprawnie szerokości elemetu. Nie chce się z tym bawić.
+<div id="tekst">Tekst</div>
+<script>
+function animate(element) {
+    let elementWidth = element.offsetWidth;
+    let parentWidth = element.parentElement.offsetWidth;
+    let flag = 0;
+  
+        setInterval(() => {
+            element.style.marginLeft = --flag + "px";
+  
+            if (elementWidth == -flag) {
+                flag = parentWidth;
+            }
+            if (flag == -100) {
+                flag = parentWidth;
+            }
+        }, 10);
+    }
+    animate(tekst)
+</script>
+<br>- zmianę grafiki po najechaniu na obraz myszą, W momencie opuszczenia myszą obszaru obrazu obraz ma zostać zmieniony na pierwotny. W celu realizacji tego zadania wyszukaj w internecie dwa pliki graficzne o tematyce zimowej, ich wymiary mają być identyczne.<br>
+<img src="img1.jpg" id="img" onmouseover="img.setAttribute('src','img2.jpg')" onmouseout="img.setAttribute('src','img1.jpg')">
+<br>- wyświetlanie 5 obrazów o identycznych wymiarach, w tym samym miejscu, co 10 sekund, w pętli<br>
+<img src="img1.jpg" id="galery" height="360px" width="480px">
+<script>
+    let i = 1;
+    setInterval(() => {
+        galery.setAttribute('src', 'img' + i + '.jpg');
+        i++;
+        if (i == 6) {
+            i = 1;
+        }
+    }, 10000);
+</script>
+</body>

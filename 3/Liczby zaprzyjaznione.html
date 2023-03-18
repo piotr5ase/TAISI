@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>zadanie04</title>
+</head>
+<body>
+    Napisz program, wyszukujący w zakresie do 6000 pary liczb naturalnych zaprzyjaźnionych, takich, że suma dzielników właściwych każdej z tych liczb równa się drugiej. <br>
+    <script defer>
+    function sumaDzielnikw(liczba) {
+        var suma = 0;
+        console.log("liczba: " + liczba);
+        for (var i=1; i<liczba; i++){
+            console.log("i: " + i);
+            if (liczba%i==0){
+                console.log("liczba% i: " + liczba%i);
+                suma += i;
+                console.log("suma: " + suma);
+            }
+        }
+        console.log("suma dzielnikow dla liczby " + liczba + " wynosi: " + suma);
+        return suma;
+    }
+    function czyZaprzyjaznione(liczba1, liczba2) {
+        if (sumaDzielnikw(liczba1) == liczba2 && sumaDzielnikw(liczba2) == liczba1) {
+            return true;
+        }
+        return false;
+    }
+    function wyszukajZaprzyjaznione(ilosc) {
+        var wynik = "";
+        for (var i=1; i<ilosc; i++){
+            for (var j=i+1; j<ilosc; j++){
+
+                if (czyZaprzyjaznione(i, j)) {
+                    wynik += i + " i " + j + " są liczbami zaprzyjaźnionymi <br>";
+                }
+            }
+        }
+        document.getElementById('wynik').innerHTML = wynik;
+    }
+    </script>
+    <button onclick="wyszukajZaprzyjaznione(6000)">Wyszukaj zaprzyjaźnione TO MOCNO PROCESOR OBCIAZA</button>
+    <button onclick="wyszukajZaprzyjaznione(300)">Wyszukaj zaprzyjaźnione tylko do 300</button>
+    <div id="wynik"></div>
+</html>

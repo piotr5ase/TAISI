@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>calc</title>
+        <meta charset="utf-8">
+        <meta lang="pl">
+    </head>
+    <body>
+        <script>
+            //refresh page
+            function reload() {
+                location.reload();
+            }
+            function calc(number){
+                var result = document.getElementById("input");
+                result.value += number;
+            }
+            function clear(){
+                var result = document.getElementById("input");
+                result.value = "";
+            }
+            function operation(operator){
+                var a = document.getElementById("input").value;
+                if (a == "NaN"){ //jak cos nie zadziala poprawnie to sie przeladuje strona, ale da czas na przeczytanie komunikatu
+                    reload();
+                }
+                clear();
+                //czekam na = i wykonuje dzialanie
+                document.getElementById("equal").addEventListener("click", function(){
+                    var b = document.getElementById("input").value;
+                    var result = document.getElementById("input");
+                    if (b == "NaN"){ //jak cos nie zadziala poprawnie to sie przeladuje strona
+                        reload();
+                    }
+                    if (operator == "+"){
+                        dodaj(a, b);
+                    }
+                    else if (operator == "-"){
+                        odejmij(a, b);
+                    }
+                    else if (operator == "*"){
+                        pomnoz(a, b);
+                    }
+                    else if (operator == "/"){
+                        podziel(a, b);
+                    }
+                    else if (operator == "nta"){
+                        nta(a,b);
+                    }
+                    else if (operator == "sqrt"){
+                        pierwiastek(a,b);
+                    }
+                    else if (operator == "pow"){
+                        potega(a,b);
+
+                    }
+                });
+            }
+            function dodaj(a, b){
+                var result = document.getElementById("input");
+                result.value = parseFloat(a) + parseFloat(b);
+                a = result.value;
+                operator = "";
+            }
+            function odejmij(a, b){
+                var result = document.getElementById("input");
+                result.value = parseFloat(a) - parseFloat(b);
+                a = result.value;
+                operator = "";
+            }
+            function pomnoz(a, b){
+                var result = document.getElementById("input");
+                result.value = parseFloat(a) * parseFloat(b);
+                a = result.value;
+                operator = "";
+            }
+            function podziel(a, b){
+                var result = document.getElementById("input");
+                result.value = parseFloat(a) / parseFloat(b);
+                a = result.value;
+                operator = "";
+            }
+            function nta(a, b){//tutaj b jest ignorowane
+                var result = document.getElementById("input");
+                result.value = 1/a;
+                a = result.value;
+                operator = "";
+            }
+            function pierwiastek(a, b){//tutaj b jest ignorowane
+                var result = document.getElementById("input");
+                result.value = Math.sqrt(a);
+                a = result.value;
+                operator = "";
+            }
+            function potega(a, b){
+                var result = document.getElementById("input");
+                result.value = Math.pow(a, b);
+                a = result.value;
+                operator = "";
+            }
+        </script>
+            
+        </script>
+        <input type="text" id="input" placeholder="0"><br>
+        <button onclick="calc(1)">1</button>
+        <button onclick="calc(2)">2</button>
+        <button onclick="calc(3)">3</button>
+        <button onclick="operation('+')">+</button><br>
+        <button onclick="calc(4)">4</button>
+        <button onclick="calc(5)">5</button>
+        <button onclick="calc(6)">6</button>
+        <button onclick="operation('-')">-</button><br>
+        <button onclick="calc(7)">7</button>
+        <button onclick="calc(8)">8</button>
+        <button onclick="calc(9)">9</button>
+        <button onclick="operation('*')">*</button><br>
+        <button onclick="calc(0)">0</button>
+        <button onclick="calc('.')">.</button>
+        <button onclick="" id="equal">=</button>
+        <button onclick="operation('/')">/</button><br>
+        <button onclick="operation('nta')">1/x</button>
+        <button onclick="operation('sqrt')">&Sqrt;x</button>
+        <button onclick="operation('pow')">x^y</button><br>
+        <button onclick="window.clear()">C</button> <!-- Dlaczego tu musi być window ? Nie działa bez tego-->
+        <button onclick="reload()">CE</button><br>
+
+        Nie przewidziałem operacji 1 elementowej 1/x, &radic;x  trzeba wcisnąć przycisk = aby wyświetlić wynik.<br> Kiedyś zamienię &radic;x na y&radic;x, ale nie potrzebuje tego do zadania
+    </body>
+</html>

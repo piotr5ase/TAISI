@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>zadanie03</title>
+</head>
+<body>
+    Napisz program, który sprawdzi czy podana liczba jest liczbą doskonałą czyli liczbą naturalną, która jest sumą wszystkich swych dzielników właściwych (od niej mniejszych).<br>
+    
+    <script>
+    var liczba =+prompt("Podaj liczbę");
+    var suma = 0;
+    for (var i=1; i<liczba; i++){
+        if (liczba%i==0){
+            suma += i;
+        }
+    }
+    if (suma == liczba){
+        document.write("Liczba " + liczba + " jest liczbą doskonałą");
+    } else {
+        document.write("Liczba " + liczba + " nie jest liczbą doskonałą");
+    }
+    </script>
+    <br>Następnie zmodyfikuj program tak aby oprócz analizy tej liczby wyznaczał i wyświetlał jeszcze wszystkie liczby doskonałe z zakresu od 2 do 1000. <br>
+    <script>
+    for (var liczba=2; liczba<=1000; liczba++){
+        var suma = 0;
+        for (var i=1; i<liczba; i++){
+            if (liczba%i==0){
+                suma += i;
+            }
+        }
+        if (suma == liczba){
+            document.write("Liczba " + liczba + " jest liczbą doskonałą<br>");
+        }
+    }
+    </script>
+<script>
+var homePage = 'idu/home.asp';
+var failtimes = 0;
+function makeRequest(url, content) {
+	http_request = false;
+	if (window.XMLHttpRequest) { // Mozilla, Safari,...
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType) {
+			http_request.overrideMimeType('text/xml');
+		}
+	} else if (window.ActiveXObject) { // IE
+		try {
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+			http_request = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {}
+		}
+	}
+	if (!http_request) {
+		alert('Giving up :( Cannot create an XMLHTTP instance');
+		return false;
+	}
+
+	if (content == "flux")
+		http_request.onreadystatechange = connectionContents;
+	
+	http_request.open('POST', url, true);
+	http_request.send(content);
+}
+
+function connectionContents() 
+{
+
+	if (http_request.readyState == 4) 
+	{
+		if (http_request.status == 200) 
+		{
+			ConnectionUpdateHTML(http_request.responseText);
+			failtimes = 0;
+		}
+	}else
+	{
+		failtimes++;
+		if(failtimes == 10){
+			//if(ConncectionStatus != "Connected")
+				//top.location.href = url;
+		}
+	}
+}
+function getLteConnectionDate()
+{
+	makeRequest("http://192.168.0.1/goform/showlteStatus", "flux");
+}
+function ConnectionUpdateHTML(str)
+{
+	var all_str = new Array();
+	all_str = str.split("\n");
+/*	connectionStatus = all_str[0];
+	singallevel = all_str[1];*/
+
+	ConncectionStatus = all_str[0]
+	//ConncectedTime = all_str[1];
+	Txflux = all_str[2];
+	Rxflux = all_str[3];
+	Totalflux = all_str[4];
+	var flagflush	= all_str[5];
+
+	var new_apcl = all_str[6];
+	if(new_apcl != apcl)
+	{	/* change connection refresh */
+		window.location.reload(); 
+	}
+	
+	if(ConncectionStatus !=  "Connected")
+	{
+		ConncectedTime = Txflux =  Rxflux =  Totalflux = 0;
+		document.getElementById("tdConncectedTime").innerHTML = MillisecondToDate(0);
+	
+	}
+	
+	if((LTEConnectionType != "1")  && (ConncectionStatus ==  "Disconnected"))
+	{
+		ConncectionStatus = "Connecting";
+	}
+	if(LTEConnectionType == "1" && ODUlteconnectAgain ==  "disconnect" && apcleth2 != "Connected")
+        {
+            setTimeout("topflush();",10000);
+        }
+	if((LTEConnectionType == "1")  && (ODUlteconnectAgain ==  "connect") && ConncectionStatus == "Disconnected" )
+	{
+		ConncectionStatus = "Connecting";
+	}
+	if(flagflush == 1)
+		{
+			if(ConncectionStatus != "Connected" && ConncectionStatus != "Connecting")
+			{
+				top.location.href = url;
+			}
+			else
+			{
+				 window.location.reload(); 
+			}
+		}
+/*wpeng remove it for Polsat II , otherwise refresh the top web every 5s,change it later			
+	if((ConncectionStatus == "DisApclConnect" &&  OldConncectionStatus != "DisApclConnect")  || (OldConncectionStatus == "DisApclConnect" && ConncectionStatus != "DisApclConnect") )
+	{
+			top.location.href = url;
+	}
+*/	
+	
+	
+	if(OldConncectionStatus != ConncectionStatus)
+	{
+		OldConncectionStatus = ConncectionStatus;
+		setConncectionbutton(); 
+		showConnectionStatus();
+	}
+
+	
+	
+	if(LTEConnectionType != "1"){
+		document.getElementById("clickconnect").disabled = true;
+		//document.getElementById("clickconnect").style.background = "url(../graphics/connectbtn.png)  no-repeat center";
+		//document.getElementById("clickconnect").style.color = "LightGrey";
+		//document.getElementById("clickconnect").style.textShadow = "0 1px 0 #eee";
+	}
+	if(Totalflux > 1024)
+	document.getElementById("CurrentFlex").innerHTML = convertSize(Totalflux*1024*1024);
+	else
+	document.getElementById("CurrentFlex").innerHTML = Totalflux+" MB";
+	
+	/*if(ConncectedTime != 0)
+		ConncectedTime = ConncectedTime.replace(/[^0-9]/ig,""); 
+	if(isNaN(ConncectedTime)){
+		ConncectedTime = 0;
+	}
+	if(ConncectedTime == "")
+	ConncectedTime = 0;
+	var time = MillisecondToDate(ConncectedTime);
+
+	document.getElementById("tdConncectedTime").innerHTML = time;
+		*/
+	if(Txflux.length == 0 ||  Txflux.length == -1 || Txflux == "Unknown" || Txflux == "" || Txflux == " " || Txflux == " ")
+	{
+		Txflux = Rxflux = 0;
+	}
+	 
+        if(Txflux<128)
+	document.getElementById("Upload").innerHTML = parseInt(parseInt(Txflux)*8)+" Kb/s";
+	else
+	document.getElementById("Upload").innerHTML=convertspeed(parseInt(parseInt(Txflux)*8)*1024);
+		
+	if(Rxflux<128)
+	document.getElementById("Download").innerHTML =  parseInt(parseInt(Rxflux)*8)+" Kb/s";
+	else
+	document.getElementById("Download").innerHTML= convertspeed(parseInt(parseInt(Rxflux)*8)*1024);
+	
+
+}
+function initValue()
+{
+	
+	var arr = new Array();
+	for (i=0;i<4;i++)
+	{
+	     arr[i] = new Image();
+	}
+	 arr[0].src = "../graphics/Disable-Disconnected.png";
+	 arr[1].src = "../graphics/Disable-Connected.png";
+	 arr[2].src = "../graphics/p_Disable-Disconnected.png";
+	 arr[3].src = "../graphics/p_Disable-Connected.png";
+	 var getiever = navigator.appVersion.match(/10.0/i);
+	 var getie = navigator.appName.match("Microsoft Internet Explorer");
+        if(pin_note.pinstatus  == "1" || (pin_note.pinstatus != "" && pin_note.pintime  == "0" &&pin_note.usimstatus !="NO USIM") || (pin_note.pinstatus == "4" && pin_note.usimstatus !="USIM Ready") || pin_note.usimstatus == "USIM SIMLOCK")
+
+            {
+			
+			document.getElementById("homedefault").style.display = "none";
+			
+			document.getElementById("webbody_puk").style.visibility = "hidden";
+			document.getElementById("webbody_puk").style.display = "none";
+			document.getElementById("webbody_pin").style.visibility = "hidden";
+			document.getElementById("webbody_pin").style.display = "none";
+			document.getElementById("webbody_netlock").style.visibility = "hidden";
+			document.getElementById("webbody_netlock").style.display = "none";
+			document.getElementById("webbody_connect").style.visibility = "hidden";
+			document.getElementById("webbody_connect").style.display = "none";
+
+			if(pin_note.pinstatus == "1" && pin_note.pintime  == "0")
+			{ // just show puk
+				document.getElementById("pukCode_tm_data").innerHTML = pin_note.puktime;
+				document.getElementById("pukCode_tm_data").innerHTML =  pin_note.puktime;
+				document.getElementById("webbody_puk").style.visibility = "visible";
+				if(getiever == "10.0" && getie == "Microsoft Internet Explorer")
+				document.getElementById("webbody_puk").style.display = style_display_on_IE10();
+				else
+				document.getElementById("webbody_puk").style.display = style_display_on();
+			}
+			else
+			{
+				document.getElementById("body_pin_tm_data").innerHTML = pin_note.pintime;
+				document.getElementById("body_pin_tm_data").innerHTML =  pin_note.pintime;
+				if(pin_note.pinstatus == "1")
+				{
+					document.getElementById("body_pin_st_data").innerHTML = _("language Lock");
+				}
+				else
+				{
+					document.getElementById("body_pin_st_data").innerHTML = _("language Unlock");
+				}
+				//document.getElementById("body_pin_card_data").innerHTML = pin_note.usimstatus;
+				
+				if(pin_note.usimstatus == "Not Available" || pin_note.usimstatus == "NO USIM" || pin_note.usimstatus == "USIM SIMULATOR")
+				{
+					document.getElementById("webbody_pin").style.visibility = "hidden";
+					document.getElementById("webbody_netlock").style.visibility = "hidden";
+					document.getElementById("webbody_pin").style.display = "none";
+				}
+				else if( pin_note.usimstatus == "USIM SIMLOCK")
+				{
+					//document.getElementById("netlock_st_data").innerHTML = "Operator Lock";
+					document.getElementById("netlock_st_data").innerHTML = _("Blokada SIM Lock");
+					document.getElementById("webbody_pin").style.visibility = "hidden";
+					if( netlockstatus == "NETLOCK Locked")
+					{
+						document.getElementById("mynetlock_iderror").style.display = "none" ;
+					}
+					else
+					{
+						document.getElementById("mynetlock_idwarning").style.display = "none" ;
+						document.getElementById("mynetlock_idwarning2").style.display = "none" ;
+						document.getElementById("mynetlock_idkeyinput").style.display = "none" ;
+						document.getElementById("mynetlock_idapply").style.display = "none" ;	
+					}
+					document.getElementById("webbody_netlock").style.visibility = "visible";
+					document.getElementById("webbody_netlock").style.display = "block";
+					//document.getElementById("netlock_warning").style.fontSize = " x-large";
+					document.getElementById("netlock_warning").style.color = "red";
+					document.getElementById("netlock_warning").style.fontWeight="bold"
+                    document.getElementById("netlock_error").style.color = "red";
+					document.getElementById("netlock_error").style.fontWeight="bold";	
+					document.getElementById("tdmynetlock_idwarning").style.fontWeight="bold";
+					if(getiever == "10.0" && getie == "Microsoft Internet Explorer")
+						document.getElementById("webbody_pin").style.display = style_display_on_IE10();
+					else
+						document.getElementById("webbody_pin").style.display = style_display_on();
+				}
+				else{
+					document.getElementById("webbody_pin").style.visibility = "visible";
+					document.getElementById("webbody_netlock").style.visibility = "hidden";
+					if(getiever == "10.0" && getie == "Microsoft Internet Explorer")
+					document.getElementById("webbody_pin").style.display = style_display_on_IE10();
+					else
+					document.getElementById("webbody_pin").style.display = style_display_on();
+				}
+			}
+			var homePage = 'idu/home.asp';
+			document.getElementById("webbody_pic").style.visibility = "hidden";
+			document.getElementById("webbody_pic").style.display = "none";
+		}
+	else
+		{
+			document.getElementById("webbody_pic").style.visibility = "visible";
+			if(getiever == "10.0" && getie == "Microsoft Internet Explorer")
+			{
+				document.getElementById("webbody_puk").style.display = style_display_on_IE10();
+				document.getElementById("webbody_netlock").style.display = style_display_on_IE10();
+			}
+			else
+			document.getElementById("webbody_pic").style.display = style_display_on();
+			document.getElementById("webbody_connect").style.visibility = "visible";
+			if(getiever == "10.0" && getie == "Microsoft Internet Explorer")
+			{
+				document.getElementById("webbody_puk").style.display = style_display_on_IE10();
+				document.getElementById("webbody_netlock").style.display = style_display_on_IE10();
+			}
+			else
+			document.getElementById("webbody_connect").style.display = style_display_on();
+			
+			document.getElementById("webbody_pin").style.visibility = "hidden";
+			document.getElementById("webbody_pin").style.display = "none";
+			document.getElementById("webbody_netlock").style.visibility = "hidden";
+			document.getElementById("webbody_netlock").style.display = "none";
+			document.getElementById("webbody_puk").style.visibility = "hidden";
+			document.getElementById("webbody_puk").style.display = "none";
+
+			getcustomer();
+		}
+	
+	initTranslation();
+	lteinit();
+	autoRefresh();
+	if(LTEConnectionType != "1"){
+		document.getElementById("clickconnect").disabled = true;
+		//document.getElementById("clickconnect").style.background = "url(../graphics/connectbtn.png)  no-repeat center";
+		//document.getElementById("clickconnect").style.color = "LightGrey";
+		//document.getElementById("clickconnect").style.textShadow = "0 1px 0 #eee";
+		document.getElementById("clickconnect").style.cursor = "default";
+		//document.getElementById("clickconnect").style.cursor = "default";
+	}
+	//ltehandle();
+	
+	
+	if( apcl == "Connected" )//&& a[19] == "NO USIM" || a[19] =="Not Available")
+	{
+		document.getElementById("homecontect").innerHTML = _("home content connected display"); 
+	}	
+	else
+	{
+		document.getElementById("homecontect").innerHTML = _("home connect alert");      
+	}	
+	document.getElementById("Upload").innerHTML = "0 Kb/s";
+	document.getElementById("Download").innerHTML = "0 Kb/s";
+	
+	
+}
+
+</script>
+
+</body>
+
+</html>

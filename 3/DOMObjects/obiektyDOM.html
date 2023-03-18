@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>obiektyDOM</title>
+    </head>
+    <body>
+        <script>
+            window.open("http://www.google.pl", "google");
+
+            document.write(window.innerHeight + " " + window.innerWidth);
+
+            function napisz(){
+                document.getElementById("tekst").innerHTML = "Tekst po 3 sekundach";
+            }
+
+            window.setTimeout(napisz, 3000);
+            
+            //showtime() nie istnieje
+            function czas(){
+                var data = new Date();
+                document.getElementById("czas").innerHTML = data.getHours() + ":" + data.getMinutes() + ":" + data.getSeconds();
+            }
+
+            var czas = window.setInterval(czas, 1000);
+            
+            document.cookie="nazwa-wartosc";
+
+
+        </script>
+        <p>Czas stpouje po kliknięciu guzika</p>
+        <button onclick="clearInterval(czas)">Stop</button>
+        <div id="tekst"></div>
+        <div id="czas"></div>
+        <script>
+            document.write("<br>Netscape(?): " + navigator.appName + "<br>"); //appname zawsze zwraca Netscape
+            document.write("Wersja przeglądarki: " + navigator.appVersion + "<br>");
+            document.write("Język przeglądarki:" + navigator.language + "<br>");
+            document.write("Platforma: " + navigator.platform + "<br>");
+        </script>
+        <script>
+            document.write("URL strony:" + document.URL + "<br>");
+            document.write("Tytuł strony:" + document.title + "<br>");
+            document.write("Ostatnia modyfikacja: " + document.lastModified + "<br>");
+            document.write("To wszystko działa tylko kiedy zostało zainicjowane<br>");
+            document.write("Tło strony: " + document.bgColor + "<br>");
+            document.write("Kolor tekstu: " + document.fgColor + "<br>");
+            document.write("Kolor linków: " + document.linkColor + "<br>");
+            document.write("Kolor odwiedzonych linków: " + document.vlinkColor + "<br>");
+            document.write("Kolor aktywnych linków: " + document.alinkColor + "<br>");
+            document.write("Cookie: " + document.cookie + "<br>");
+        </script>
+        
+        history.<br>
+        <button onclick="history.go(-1)">go(-1)</button>
+        <button onclick="history.back()">back()</button>
+        <button onclick="history.forward()">forward()</button>
+        <br>Długość historii: <script>document.write(history.length);</script>
+        <br>
+        <button onclick="history.go(0)">Odśwież</button>
+
+        <br>Location.<br>
+        <script>
+        document.write("Adres URL: " + location.href + "<br>");
+        document.write("Protokół: " + location.protocol + "<br>");
+        document.write("Host: " + location.host + "<br>");
+        document.write("Port: " + location.port + "<br>");
+        document.write("Ścieżka: " + location.pathname + "<br>");
+        document.write("Zapytanie: " + location.search + "<br>");
+        document.write("Kotwica: " + location.hash + "<br>");
+        </script>
+        <button onclick="location.assign('http://www.google.pl')">Przejdź do Google</button>
+        <button onclick="location.reload()">Odśwież</button>
+        <button onclick="location.replace('http://www.google.pl')">Zamień stronę</button>
+        <button onclick="location.href='http://www.google.pl'">Zamień stronę</button>
+        <br>screen.<br>
+        <script>
+            document.write("Wysokość okna: " + screen.height + "<br>");
+            document.write("Szerokość okna: " + screen.width + "<br>");
+            document.write("Kolor: " + screen.colorDepth + "<br>");
+            document.write("Wysokość: " + screen.availHeight + "<br>");
+            document.write("Szerokość: " + screen.availWidth + "<br>");
+            document.write("Kolor: " + screen.pixelDepth + "<br>");
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            jQuery - 02
+        </title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+Wykorzystując wiedzę z poprzedniego zadania jQuery utwórz galerię, w której będą wyświetlane pliki i szerokości 100px.<br>
+W momencie kliknięcia na dany plik ma się on powiększyć do szerokości 800px. <br>
+Ponowne kliknięcie na ten plik ma spowodować powrót do pierwotnej wielkości 100px szerokości.<br>
+Przed przygotowaniem galerii wszystkie pliki graficzne zapisz jako pliki .png o szerokości 800px <br>
+<br>
+Przeskalowałem je do szerokości 800px, ale ratio jest zachowane, przez co obrazki są nie proporcjonalne. <br>
+
+<img src="image (1).png" alt="image (1).png" width="100px">
+<img src="image (2).png" alt="image (2).png" width="100px">
+<img src="image (3).png" alt="image (3).png" width="100px">
+<img src="image (4).png" alt="image (4).png" width="100px">
+<img src="image (5).png" alt="image (5).png" width="100px">
+<img src="image (6).png" alt="image (6).png" width="100px">
+<img src="image (7).png" alt="image (7).png" width="100px">
+
+<script>
+
+    $(document).ready(function(){
+        $("img").click(function(){
+            if($(this).width() == 100){
+                $(this).width(800);
+            }else{
+                $(this).width(100);
+            }
+        });
+    });
+</script>
+
+    </body>
+</html>
